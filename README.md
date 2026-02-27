@@ -296,6 +296,6 @@ Environment: Python 3.x with ML stack (scikit-learn, TensorFlow, XGBoost)
 LICENSE & DISCLAIMER:
 
 
-This tool is for authorized security testing and research purposes only.
+This tool is for authorized  security testing and research purposes only.
 Unauthorized access to computer networks is illegal. Always obtain proper
 authorization before testing security systems.

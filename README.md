@@ -1,6 +1,6 @@
-================================================================================
-                    DDoS ANOMALY DETECTION PROJECT
-================================================================================
+
+                    DDoS ANOMALY DETECTION PROJECT:
+
 
 PROJECT OVERVIEW:
 -----------------
@@ -14,9 +14,9 @@ OBJECTIVE:
 To develop and evaluate multiple ML models capable of accurately identifying DDoS
 attacks in network traffic data, comparing their performance across various metrics.
 
-================================================================================
+
 KEY COMPONENTS:
-================================================================================
+
 
 1. ANOMALY_DETECTION.PY (Main Analysis Script)
    ↳ DDoSDataAnalysis class - Core analysis engine
@@ -69,9 +69,8 @@ KEY COMPONENTS:
    • Validates EDA functionality
    • Provides diagnostic error messages
 
-================================================================================
 INSTALLATION & SETUP:
-================================================================================
+
 
 REQUIREMENTS:
 • Python 3.7+
@@ -105,9 +104,9 @@ DATA REQUIREMENTS:
 • Expected columns: Multiple network traffic features + "Label" column
 • Label values: Normal traffic and DDoS attack classifications
 
-================================================================================
+
 USAGE:
-================================================================================
+
 
 BASIC USAGE:
 1. Run the error/dependency checker first:
@@ -135,9 +134,8 @@ PERFORMANCE METRICS EVALUATED:
 • ROC-AUC - Area under the Receiver Operating Characteristic curve
 • Confusion Matrix - Breakdown of TP, TN, FP, FN predictions
 
-================================================================================
 DATA FLOW:
-================================================================================
+
 
 Raw Data (.parquet/.csv)
         ↓
@@ -159,9 +157,9 @@ Raw Data (.parquet/.csv)
         ↓
     Visualization & Reports
 
-================================================================================
+
 KEY FEATURES:
-================================================================================
+
 
 ✓ Multi-model comparison framework
 ✓ Automatic hyperparameter tuning (GridSearchCV)
@@ -176,9 +174,9 @@ KEY FEATURES:
 ✓ Model comparison rankings
 ✓ Optional TensorFlow support for DNN
 
-================================================================================
+
 HYPERPARAMETERS & CONFIGURATION:
-================================================================================
+
 
 FEATURE SELECTION:
 • Method: SelectKBest with f_classif
@@ -217,9 +215,9 @@ Deep Neural Network (Optional):
 • Early Stopping: Enabled
 • Learning Rate Reduction: Enabled
 
-================================================================================
+
 TROUBLESHOOTING:
-================================================================================
+
 
 Issue: FileNotFoundError for dataset
 Solution: Verify the data file path in anomaly_detection.py matches your file location
@@ -236,9 +234,9 @@ Solution: Ensure random_state parameters are set (for reproducibility)
 Issue: Low model accuracy
 Solution: Check data quality, try feature engineering, or tune hyperparameters
 
-================================================================================
+
 PROJECT STRUCTURE:
-================================================================================
+
 
 DDOS/
 ├── anomaly_detection.py          (Main analysis script)
@@ -248,9 +246,8 @@ DDOS/
 ├── ddos_env/                     (Virtual environment)
 └── __pycache__/                  (Compiled Python files)
 
-================================================================================
 MODEL COMPARISON STRATEGY:
-================================================================================
+
 
 The project trains and compares 7 different machine learning models to identify
 which performs best at detecting DDoS attacks:
@@ -262,18 +259,18 @@ which performs best at detecting DDoS attacks:
 
 Each model is evaluated on the same train-test split to ensure fair comparison.
 
-================================================================================
+
 EXPECTED RESULTS:
-================================================================================
+
 
 • Random Forest and XGBoost typically show high accuracy (>95%)
 • Precision and Recall should be balanced for good DDoS detection
 • ROC-AUC > 0.95 indicates excellent model discrimination
 • Confusion matrix should show low false negative rate (important for security)
 
-================================================================================
+
 NEXT STEPS / IMPROVEMENTS:
-================================================================================
+
 
 • Implement cross-validation for robust model evaluation
 • Add feature importance analysis
@@ -286,18 +283,18 @@ NEXT STEPS / IMPROVEMENTS:
 • Add more advanced feature engineering techniques
 • Implement anomaly detection algorithms (Isolation Forest, Autoencoder)
 
-================================================================================
+
 CONTACT & SUPPORT:
-================================================================================
+
 
 Author: DDOS Anomaly Detection Project
 Purpose: Machine Learning-based Network Attack Detection
 Created: 2026
 Environment: Python 3.x with ML stack (scikit-learn, TensorFlow, XGBoost)
 
-================================================================================
+
 LICENSE & DISCLAIMER:
-================================================================================
+
 
 This tool is for authorized security testing and research purposes only.
 Unauthorized access to computer networks is illegal. Always obtain proper

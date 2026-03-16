@@ -1,10 +1,6 @@
 
 import pandas as pd
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import StandardScaler, LabelEncoder
@@ -78,42 +74,6 @@ class DDoSDataAnalysis:
         # Clean numeric columns for visualization
         numeric_cols = self.raw_data.select_dtypes(include=[np.number]).columns
         clean_numeric_data = self.raw_data[numeric_cols].replace([np.inf, -np.inf], np.nan).dropna()
-
-        # Visualizations
-        plt.figure(figsize=(15, 10))
-        
-        # 1. Missing Values Bar Plot
-        plt.subplot(2, 2, 1)
-        missing_values = self.raw_data.isnull().sum()
-        missing_values = missing_values[missing_values > 0]
-        plt.bar(missing_values.index, missing_values.values, color='purple')
-        plt.title('Missing Values per Column')
-        plt.ylabel('Count')
-        plt.xticks(rotation=45)
-        
-        # 2. Target Label Distribution
-        plt.subplot(2, 2, 2)
-        if ' Label' in self.raw_data.columns:
-            self.raw_data[' Label'].value_counts().plot(kind='pie', autopct='%1.1f%%')
-            plt.title('Label Distribution')
-        
-        # 3. Boxplots for Numeric Features
-        plt.subplot(2, 2, 3)
-        if not clean_numeric_data.empty:
-            sns.boxplot(data=clean_numeric_data)
-            plt.title('Boxplot of Numeric Features')
-            plt.xticks(rotation=45)
-        
-        # 4. Correlation Heatmap
-        plt.subplot(2, 2, 4)
-        if not clean_numeric_data.empty:
-            corr_matrix = clean_numeric_data.corr()
-            sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', linewidths=0.5, fmt=".2f", square=True)
-            plt.title('Feature Correlation Heatmap')
-        
-        plt.tight_layout()
-        plt.savefig('eda_analysis.png', dpi=100, bbox_inches='tight')
-        plt.close()
         
         return eda_insights
     
@@ -198,14 +158,6 @@ class DDoSDataAnalysis:
             'feature': selected_features,
             'importance': rf_classifier.feature_importances_[selected_indices]
         }).sort_values('importance', ascending=False)
-        
-        # Visualization
-        plt.figure(figsize=(10, 6))
-        sns.barplot(x='importance', y='feature', data=feature_imp)
-        plt.title(f'Top {n_features} Most Important Features')
-        plt.tight_layout()
-        plt.savefig('feature_importance.png', dpi=100, bbox_inches='tight')
-        plt.close()
         
         return feature_imp
     
@@ -357,101 +309,9 @@ class DDoSDataAnalysis:
                 'model': dnn_model,
                 'training_history': history
             }
-            
-            # Visualization of training history
-            if 'training_history' in results['Deep Neural Network']:
-                self._plot_training_history(results['Deep Neural Network']['training_history'])
-        
-        # Visualization of confusion matrices
-        self._plot_confusion_matrices(results)
-        
-        # Visualization of model performance
-        performance_df = pd.DataFrame.from_dict(results, orient='index')
-        performance_metrics = ['accuracy', 'precision', 'recall', 'f1_score', 'micro_auc']
-        
-        plt.figure(figsize=(12, 6))
-        performance_df[performance_metrics].plot(kind='bar')
-        plt.title('Model Performance Comparison (Including Deep Neural Network)')
-        plt.ylabel('Score')
-        plt.tight_layout()
-        plt.savefig('model_performance.png', dpi=100, bbox_inches='tight')
-        plt.close()
         
         return results
-    
-    def _plot_training_history(self, history):
-        """
-        Plot neural network training history
-        
-        Parameters:
-        -----------
-        history : keras.callbacks.History
-            Training history object
-        """
-        plt.figure(figsize=(14, 5))
-        
-        # Plot accuracy
-        plt.subplot(1, 2, 1)
-        plt.plot(history.history['accuracy'], label='Training Accuracy')
-        plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
-        plt.title('Model Accuracy Over Epochs')
-        plt.xlabel('Epoch')
-        plt.ylabel('Accuracy')
-        plt.legend()
-        plt.grid(True)
-        
-        # Plot loss
-        plt.subplot(1, 2, 2)
-        plt.plot(history.history['loss'], label='Training Loss')
-        plt.plot(history.history['val_loss'], label='Validation Loss')
-        plt.title('Model Loss Over Epochs')
-        plt.xlabel('Epoch')
-        plt.ylabel('Loss')
-        plt.legend()
-        plt.grid(True)
-        
-        plt.tight_layout()
-        plt.savefig('training_history.png', dpi=100, bbox_inches='tight')
-        plt.close()
-        
-    def _plot_confusion_matrices(self, results):
-        """
-        Plot confusion matrices for all models
-        
-        Parameters:
-        -----------
-        results : dict
-            Dictionary containing model results with confusion matrices
-        """
-        models_to_plot = list(results.keys())
-        n_models = len(models_to_plot)
-        
-        # Create subplots for all models
-        fig, axes = plt.subplots(2, 2, figsize=(14, 12))
-        axes = axes.flatten()
-        
-        for idx, model_name in enumerate(models_to_plot):
-            cm = results[model_name]['confusion_matrix']
-            
-            # Plot confusion matrix as heatmap
-            sns.heatmap(
-                cm, 
-                annot=True, 
-                fmt='d', 
-                cmap='Blues', 
-                ax=axes[idx],
-                cbar_kws={'label': 'Count'},
-                xticklabels=['Negative', 'Positive'],
-                yticklabels=['Negative', 'Positive']
-            )
-            
-            axes[idx].set_title(f'{model_name}\nConfusion Matrix')
-            axes[idx].set_ylabel('True Label')
-            axes[idx].set_xlabel('Predicted Label')
-        
-        plt.tight_layout()
-        plt.savefig('confusion_matrices.png', dpi=100, bbox_inches='tight')
-        plt.close()
+
         
 
 def main():
